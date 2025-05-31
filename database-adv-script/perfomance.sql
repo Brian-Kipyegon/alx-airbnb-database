@@ -20,10 +20,14 @@ JOIN
     properties p ON b.property_id = p.id
 LEFT JOIN 
     payments pay ON b.payment_id = pay.id
+WHERE 
+    b.start_date >= '2025-01-01'  -- Filter on bookings starting from 2025
+    AND pay.status = 'completed'  -- Filter only completed payments
 ORDER BY 
     b.start_date DESC;
 
 -- Performance analysis of the initial query
+-- Initial query: Retrieve all bookings with user, property, and payment details
 EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
@@ -46,8 +50,12 @@ JOIN
     properties p ON b.property_id = p.id
 LEFT JOIN 
     payments pay ON b.payment_id = pay.id
+WHERE 
+    b.start_date >= '2025-01-01'  -- Filter on bookings starting from 2025
+    AND pay.status = 'completed'  -- Filter only completed payments
 ORDER BY 
     b.start_date DESC;
+
 
 -- Refactored query: Use SELECT with essential fields and indexing
 SELECT 
